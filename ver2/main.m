@@ -34,9 +34,6 @@ k_0 = 2*pi/wl;                  % Wavenumber in vacuum
 phi_0 = linspace(0,.99999*pi/2,dp);    % Azimuthal angle of incidence
 theta_0 = linspace(0,.99999*pi/2,dp);  % Polar angle of incidence
 
-
-[THETA_0, PHI_0] = meshgrid(theta_0, phi_0);
-
 %% Matrix decomposition
 [eps_tt, eps_t, eps_z, eps_zz] = transverse_decomp(EPS);
 [mu_tt, mu_t, mu_z, mu_zz] = transverse_decomp(MU);
@@ -85,9 +82,9 @@ for i = 1:length(theta_0)
         M = diag(exp(1i*k_0*L*diag(D)));        % Exponential matrix, eq (20) in [1]
         P = T_1_inverse*(M/T_1_inverse);        % Propagator matrix, eq (22) in [1]. P = T_1_inverse*M*inv(T_1_inverse).
         TPTinv = (T_0_inverse\P)*T_0_inverse;   % TPTinv = T_0*P*T_0_inverse
-        alpha = TPTinv(1:2,1:2);                % matrix decomposition 
-        beta = TPTinv(1:2,3:4);                 % eq (36)  
-        gamma = TPTinv(3:4,1:2);                % in
+        alpha = TPTinv(1:2,1:2);                % matrix decomposition...
+        beta = TPTinv(1:2,3:4);                 % eq (36)...
+        gamma = TPTinv(3:4,1:2);                % in...
         delta = TPTinv(3:4,3:4);                % [1]
 
         % Scattering matrices, eq (38) in [1]
@@ -111,6 +108,7 @@ plotEM = 0;     % plot t_EM and t_ME
 cmap = 'gray';
 fontsizetitle = 14;
 fontsizelabel = 14;
+
 % abs(t_MM)
 figure(1)
 surf(phi_0.*(180/pi), theta_0.*(180/pi), t_MM);
@@ -132,7 +130,6 @@ xlim([min(phi_0) max(phi_0)].*(180/pi));
 ylim([min(theta_0) max(theta_0)].*(180/pi));
 set(gca, 'Ydir', 'reverse')
 title("$$|t_{EE}|$$", 'Interpreter', 'latex', 'FontSize', fontsizetitle)
-
 
 % abs(t_ME) & abs(t_EM)
 figure(3)
